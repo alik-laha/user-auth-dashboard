@@ -1,8 +1,8 @@
 import dotenv from 'dotenv'
 import app from "./app.js"
+
 dotenv.config()
 
-
-app.listen(3000, () => {
-    console.log(`server is runing on port 3000`)
+app.listen(process.env.PORT, () => {
+    console.log(`server is runing on port ${process.env.PORT}`)
 })
