@@ -3,6 +3,7 @@ import "./signup.css"
 import Link from "next/link"
 import { FormEvent, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const Signup = () => {
     const [name, setName] = useState("");
@@ -26,7 +27,13 @@ const Signup = () => {
 
     const handleSignUp = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
-        console.log(name, email, pass, confirmPass)
+        axios.post("/api/user/signup", { name, email, password: pass, confirmPass })
+            .then(res => {
+                console.log(res.data)
+            }
+            ).catch(err => {
+                console.log(err)
+            })
     }
 
 
