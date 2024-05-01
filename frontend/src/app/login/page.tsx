@@ -30,7 +30,7 @@ const Login = () => {
         axios.put("/api/user/login", { email, password })
             .then(res => {
                 console.log(res.data)
-                router.push("/VerifyEmail")
+                router.push("/verify/email")
 
             }).catch(err => {
                 console.log(err)

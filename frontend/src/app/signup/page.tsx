@@ -32,7 +32,7 @@ const Signup = () => {
         axios.post("/api/user/signup", { name, email, password: pass, confirmPass })
             .then(res => {
                 console.log(res.data)
-                router.push("/VerifyEmail")
+                router.push("/verify/email")
             }
             ).catch(err => {
                 setMessage(err.response.data.error)

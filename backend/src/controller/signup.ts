@@ -32,14 +32,8 @@ const Signup = async (req: Request, res: Response) => {
                     verificationExpiry: Date.now() + 600000
                 });
                 if (VerificationData) {
-                    jwt.sign({ id: id }, process.env.JWT_SECRET!, { expiresIn: process.env.JWT_Time }, (err, token) => {
-                        if (err) {
-                            return res.status(500).json({ error: 'Server error' });
-                        }
-                        res.cookie('token', token, { httpOnly: true, secure: true });
-                        res.cookie('user', id, { httpOnly: true, secure: true });
-                        return res.status(201).json({ message: 'User created successfully' });
-                    });
+                    res.cookie('user', id, { httpOnly: true, secure: true });
+                    return res.status(201).json({ message: 'User created successfully' });
                 }
             }
             else {
