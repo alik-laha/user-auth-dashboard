@@ -3,6 +3,7 @@ import "./login.css"
 import React, { FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from 'next/link'
+import axios from "axios";
 
 const Login = () => {
 
@@ -22,9 +23,14 @@ const Login = () => {
         }
     }
 
-    const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    const handleLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(email, password)
+        axios.put("/api/user/login", { email, password })
+            .then(res => {
+                console.log(res.data)
+            }).catch(err => {
+                console.log(err)
+            })
     }
 
 

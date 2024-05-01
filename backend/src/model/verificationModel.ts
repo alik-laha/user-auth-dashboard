@@ -14,8 +14,7 @@ const Verification = sequelize.define('Verify', {
         }
     },
     verificationExpiry: {
-        type: DataTypes.DATE,
-        defaultValue: false
+        type: DataTypes.BIGINT,
     },
     verifyToken: {
         type: DataTypes.STRING

@@ -13,7 +13,7 @@ const Signup = async (req: Request, res: Response) => {
         const id = crypto.randomBytes(8).toString("hex")
         const pass = await bcrypt.hash(password, 10);
         const oldUser = await User.findOne({ where: { email: email } });
-        const verify = uuidv4();
+        const verify = crypto.randomBytes(3).toString("hex")
         if (oldUser) {
             return res.status(409).json({ error: 'User already exists' });
         }
@@ -29,7 +29,7 @@ const Signup = async (req: Request, res: Response) => {
                 const VerificationData = await Verification.create({
                     userid: id,
                     verifyToken: verify,
-                    verificationExpiry: new Date(Date.now() + 600000)
+                    verificationExpiry: Date.now() + 600000
                 });
                 if (VerificationData) {
                     jwt.sign({ id: id }, process.env.JWT_SECRET!, { expiresIn: process.env.JWT_Time }, (err, token) => {
