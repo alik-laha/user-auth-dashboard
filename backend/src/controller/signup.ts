@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Verification from "../model/verificationModel.js";
+import { v4 as uuidv4 } from "uuid";
 import { VerifyEmail } from "../helper/mailer.js";
 
 const Signup = async (req: Request, res: Response) => {
@@ -11,6 +13,7 @@ const Signup = async (req: Request, res: Response) => {
         const id = crypto.randomBytes(8).toString("hex")
         const pass = await bcrypt.hash(password, 10);
         const oldUser = await User.findOne({ where: { email: email } });
+        const verify = uuidv4();
         if (oldUser) {
             return res.status(409).json({ error: 'User already exists' });
         }
@@ -18,19 +21,26 @@ const Signup = async (req: Request, res: Response) => {
             userid: id,
             username: name,
             email: email,
-            password: pass,
+            password: pass
         });
         if (newUser) {
-            const Mail = await VerifyEmail({ email, id });
+            const Mail = await VerifyEmail({ email, id: verify });
             if (Mail) {
-                jwt.sign({ id: id }, process.env.JWT_SECRET!, { expiresIn: process.env.JWT_Time }, (err, token) => {
-                    if (err) {
-                        return res.status(500).json({ error: 'Server error' });
-                    }
-                    res.cookie('token', token, { httpOnly: true, secure: true });
-                    res.cookie('user', id, { httpOnly: true, secure: true });
-                    return res.status(201).json({ message: 'User created successfully' });
+                const VerificationData = await Verification.create({
+                    userid: id,
+                    verifyToken: verify,
+                    verificationExpiry: new Date(Date.now() + 600000)
                 });
+                if (VerificationData) {
+                    jwt.sign({ id: id }, process.env.JWT_SECRET!, { expiresIn: process.env.JWT_Time }, (err, token) => {
+                        if (err) {
+                            return res.status(500).json({ error: 'Server error' });
+                        }
+                        res.cookie('token', token, { httpOnly: true, secure: true });
+                        res.cookie('user', id, { httpOnly: true, secure: true });
+                        return res.status(201).json({ message: 'User created successfully' });
+                    });
+                }
             }
             else {
                 await User.destroy({ where: { email: email } });
