@@ -4,8 +4,10 @@ import React, { FormEvent, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from 'next/link'
 import axios from "axios";
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
+    const router = useRouter();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -28,8 +30,12 @@ const Login = () => {
         axios.put("/api/user/login", { email, password })
             .then(res => {
                 console.log(res.data)
+                router.push("/VerifyEmail")
+
             }).catch(err => {
                 console.log(err)
+                setMessage(err.response.data.error)
+                setError("block")
             })
     }
 
@@ -61,7 +67,7 @@ const Login = () => {
                                 <i>Password</i>
                             </div>
 
-                            <div className="links"> <Link href="/email/verify">Forgot Password</Link> <Link href="/signup">Signup</Link>
+                            <div className="links"> <Link href="/email/verify">Forgot Password</Link> <Link href="/signup">Sign-Up</Link>
 
                             </div>
 
