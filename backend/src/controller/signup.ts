@@ -5,17 +5,15 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { VerifyEmail } from "../helper/mailer.js";
 
-
-const signup = async (req: Request, res: Response) => {
+const Signup = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;
-
     try {
-        const oldUser = await User.findOne({ where: { email } });
-
-
-        if (oldUser) return res.status(409).json({ message: "User already exists" });
-        const id = crypto.randomBytes(8).toString("hex");
-        const pass = await bcrypt.hash(password, 12);
+        const id = crypto.randomBytes(8).toString("hex")
+        const pass = await bcrypt.hash(password, 10);
+        const oldUser = await User.findOne({ where: { email: email } });
+        if (oldUser) {
+            return res.status(409).json({ error: 'User already exists' });
+        }
         const newUser = await User.create({
             userid: id,
             username: name,
@@ -27,20 +25,25 @@ const signup = async (req: Request, res: Response) => {
             if (Mail) {
                 jwt.sign({ id: id }, process.env.JWT_SECRET!, { expiresIn: process.env.JWT_Time }, (err, token) => {
                     if (err) {
-                        return res.status(400).json({ error: 'Server error' });
+                        return res.status(500).json({ error: 'Server error' });
                     }
-                    res.cookie('token', token, { httpOnly: true });
-                    res.cookie('user', id, { httpOnly: true });
+                    res.cookie('token', token, { httpOnly: true, secure: true });
+                    res.cookie('user', id, { httpOnly: true, secure: true });
                     return res.status(201).json({ message: 'User created successfully' });
                 });
             }
-            return res.status(400).json({ message: "Something went wrong" });
+            else {
+                await User.destroy({ where: { email: email } });
+                return res.status(400).json({ error: 'User not created' });
+            }
         }
-
-
-    } catch (error) {
-        return res.status(500).json({ message: "Something went wrong" });
+        else {
+            return res.status(400).json({ error: 'User not created' });
+        }
+    }
+    catch (err) {
+        console.error(err);
+        return res.status(500).json({ error: 'Server error' });
     }
 }
-
-export default signup;
+export default Signup;
