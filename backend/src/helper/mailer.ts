@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer"
-import { email } from "../type/type";
+import { email, LoggedInType } from "../type/type";
 
 
 const transport = nodemailer.createTransport({
@@ -33,8 +33,7 @@ export const VerifyEmail = async ({ email, id }: email) => {
 
 }
 
-export const LoggedIn = async ({ email, id }: email) => {
-    console.log(email, id)
+export const LoggedIn = async ({ email, os, browser, device }: LoggedInType) => {
     const Mail = {
         from: {
             name: "Alik laha",
@@ -44,11 +43,33 @@ export const LoggedIn = async ({ email, id }: email) => {
         subject: "Loggedin User",
         text: "Hello (Namaste)",
         html: "<h1>You are Now Logged in</h1>" +
-            `<p>From the Email ${email} </p> <br/>`,
+            `<p>From the Email ${email} </p> <br/>` +
+            `<p>Operating System : ${os}</p> <br/>` +
+            `<p>Browser: ${browser}</p> <br/>` +
+            `<p>Device: ${device}</p> <br/>`,
     }
 
     return await transport.sendMail(Mail)
 
 }
 
+export const LoggedOut = async ({ email, os, browser, device }: LoggedInType) => {
+    const Mail = {
+        from: {
+            name: "Alik laha",
+            address: process.env.EMAIL_USER!
+        },
+        to: email,
+        subject: "Logged Out",
+        text: "Bye (Namaste)",
+        html: "<h1>You are Now Logged Out</h1>" +
+            `<p>From the Email ${email} </p> <br/>` +
+            `<p>Operating System : ${os}</p> <br/>` +
+            `<p>Browser: ${browser}</p> <br/>` +
+            `<p>Device: ${device}</p> <br/>`,
+    }
+
+    return await transport.sendMail(Mail)
+
+}
 

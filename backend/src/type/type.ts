@@ -15,3 +15,9 @@ export interface verification {
     createdAt: Date,
     updatedAt: Date
 }
+export interface LoggedInType {
+    email: string,
+    os: string,
+    browser: string,
+    device: string
+}

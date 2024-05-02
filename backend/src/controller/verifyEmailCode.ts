@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import User from "../model/userModel.js";
 import Verification from "../model/verificationModel.js";
@@ -41,6 +40,8 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
         // Extracting device information
         const deviceInfo = userAgentString.match(deviceRegex) ? "Mobile/Tablet" : "Desktop";
 
+        const token = uuidv4()
+
         const UserInfoData = await UserInfo.create({
             id: id,
             userid: user,
@@ -48,20 +49,17 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
             Browser: browserInfo,
             Device: deviceInfo,
             loginTime: new Date(Date.now()),
+            token: token
         });
         if (UserInfoData) {
-            const Mail = await LoggedIn({ email: userdata.email, id: code });
+            const Mail = await LoggedIn({ email: userdata.email, os: osInfo, browser: browserInfo, device: deviceInfo });
             if (Mail) {
-                jwt.sign({ id: userdata.userid }, process.env.JWT_SECRET!, { expiresIn: process.env.JWT_Time }, (err, token) => {
-                    if (err) {
-                        return res.status(500).json({ error: 'Server error' });
-                    }
-                    res.cookie('token', token, { httpOnly: true, secure: true });
-                    res.cookie("browser", browserInfo, { secure: true });
-                    res.cookie("os", osInfo, { secure: true });
-                    res.cookie("device", deviceInfo, { secure: true });
-                    return res.status(200).json({ message: 'Verification successful' });
-                });
+
+                res.cookie('token', token, { httpOnly: true, secure: true });
+                res.cookie("browser", browserInfo, { secure: true });
+                res.cookie("os", osInfo, { secure: true });
+                res.cookie("device", deviceInfo, { secure: true });
+                return res.status(200).json({ message: 'Verification successful' });
             }
         }
 
