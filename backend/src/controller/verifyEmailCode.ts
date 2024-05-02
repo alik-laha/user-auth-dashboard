@@ -54,7 +54,7 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
         if (UserInfoData) {
             const Mail = await LoggedIn({ email: userdata.email, os: osInfo, browser: browserInfo, device: deviceInfo });
             if (Mail) {
-
+                res.cookie('id', id, { httpOnly: true, secure: true })
                 res.cookie('token', token, { httpOnly: true, secure: true });
                 res.cookie("browser", browserInfo, { secure: true });
                 res.cookie("os", osInfo, { secure: true });

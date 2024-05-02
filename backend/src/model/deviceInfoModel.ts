@@ -30,10 +30,6 @@ const UserInfo = sequelize.define('UserInfo', {
         type: DataTypes.DATE,
         allowNull: false
     },
-    logOutTime: {
-        type: DataTypes.DATE,
-        allowNull: true
-    },
     token: {
         type: DataTypes.STRING,
         allowNull: false

@@ -8,13 +8,15 @@ const Logout = async (req: Request, res: Response) => {
     const Browser = req.cookies.browser;
     const os = req.cookies.os;
     const device = req.cookies.device;
+    const id = req.cookies.id;
     try {
         const checkUser: any = await User.findOne({ where: { userid: user } });
         const loged = await Info.findOne({ where: { userid: user, Browser: Browser, OS: os, Device: device } });
         if (!loged) {
             return res.status(404).json({ error: 'User not found' });
         }
-        const logout = await Info.update({ logOutTime: new Date(Date.now()) }, { where: { userid: user, Browser: Browser, OS: os, Device: device } });
+        const logout = await Info.destroy({ where: { userid: user, Browser: Browser, OS: os, Device: device, id: id } });
+
         if (logout) {
             for (let cookie in req.cookies) {
                 res.clearCookie(cookie);
