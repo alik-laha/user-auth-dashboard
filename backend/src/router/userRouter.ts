@@ -9,6 +9,6 @@ router.post("/signup", CheckUser, Signup);
 
 router.put("/login", Login)
 
-router.post("/verify/email", VerifyEmail);
+router.post("/verifyemail", VerifyEmail);
 
 export default router;

@@ -4,11 +4,13 @@ import User from "../model/userModel.js";
 import Verification from "../model/verificationModel.js";
 import { LoggedIn } from "../helper/mailer.js";
 import UserInfo from "../model/deviceInfoModel.js";
+import { v4 as uuidv4 } from 'uuid';
 
 
 const VerifyEmailCode = async (req: Request, res: Response) => {
     const { code } = req.body;
     const user = req.cookies.user;
+    const id = uuidv4();
     try {
         const VerificationData: any = await Verification.findOne({ where: { userid: user } });
         if (!VerificationData) {
@@ -40,6 +42,7 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
         const deviceInfo = userAgentString.match(deviceRegex) ? "Mobile/Tablet" : "Desktop";
 
         const UserInfoData = await UserInfo.create({
+            id: id,
             userid: user,
             OS: osInfo,
             Browser: browserInfo,

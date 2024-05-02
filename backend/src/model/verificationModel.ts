@@ -3,7 +3,6 @@ import sequelize from "../config/dataBaseConfig.js";
 import User from "./userModel.js";
 
 const Verification = sequelize.define('Verify', {
-
     userid: {
         type: DataTypes.STRING,
         allowNull: false,

@@ -13,6 +13,10 @@ const UserInfo = sequelize.define('UserInfo', {
             key: 'userid'
         }
     },
+    id: {
+        type: DataTypes.STRING,
+        primaryKey: true
+    },
     OS: {
         type: DataTypes.STRING,
     },
