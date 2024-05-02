@@ -57,6 +57,9 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
                         return res.status(500).json({ error: 'Server error' });
                     }
                     res.cookie('token', token, { httpOnly: true, secure: true });
+                    res.cookie("browser", browserInfo, { secure: true });
+                    res.cookie("os", osInfo, { secure: true });
+                    res.cookie("device", deviceInfo, { secure: true });
                     return res.status(200).json({ message: 'Verification successful' });
                 });
             }
