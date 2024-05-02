@@ -6,6 +6,7 @@ import Login from "../controller/login.js";
 import VerifyEmail from "../controller/verifyEmailCode.js";
 import VerifyUser from "../controller/verifyUser.js";
 import Logout from "../controller/logout.js";
+import ResendCode from "../controller/resendCode.js";
 
 router.post("/signup", CheckUser, Signup);
 
@@ -15,6 +16,7 @@ router.post("/verifyemail", VerifyEmail);
 
 router.get("/verifyuser", VerifyUser);
 
-router.get("/logout", Logout);
+router.get("/logout/:id", Logout);
 
+router.get("/resendcode", ResendCode);
 export default router;

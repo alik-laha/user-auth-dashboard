@@ -8,7 +8,7 @@ const Logout = async (req: Request, res: Response) => {
     const Browser = req.cookies.browser;
     const os = req.cookies.os;
     const device = req.cookies.device;
-    const id = req.cookies.id;
+    const id = req.params.id;
     try {
         const checkUser: any = await User.findOne({ where: { userid: user } });
         const loged = await Info.findOne({ where: { userid: user, Browser: Browser, OS: os, Device: device } });
@@ -21,8 +21,11 @@ const Logout = async (req: Request, res: Response) => {
             for (let cookie in req.cookies) {
                 res.clearCookie(cookie);
             }
-            const Mail = LoggedOut({ email: checkUser.email, os: os, browser: Browser, device: device });
+            await LoggedOut({ email: checkUser.email, os: os, browser: Browser, device: device });
+
             return res.status(200).json({ message: "User logged out" });
+
+
         }
     } catch (err) {
         console.log(err);
