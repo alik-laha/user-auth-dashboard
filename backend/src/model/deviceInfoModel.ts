@@ -25,6 +25,14 @@ const UserInfo = sequelize.define('UserInfo', {
     },
     Device: {
         type: DataTypes.STRING
+    },
+    loginTime: {
+        type: DataTypes.DATE,
+        allowNull: false
+    },
+    logOutTime: {
+        type: DataTypes.DATE,
+        allowNull: true
     }
 });
 

@@ -46,7 +46,8 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
             userid: user,
             OS: osInfo,
             Browser: browserInfo,
-            Device: deviceInfo
+            Device: deviceInfo,
+            loginTime: new Date(Date.now()),
         });
         if (UserInfoData) {
             const Mail = await LoggedIn({ email: userdata.email, id: code });
