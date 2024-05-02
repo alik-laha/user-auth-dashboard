@@ -4,9 +4,11 @@ import Link from "next/link"
 import { FormEvent, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+
 
 const Signup = () => {
+    const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
@@ -31,7 +33,7 @@ const Signup = () => {
         axios.post("/api/user/signup", { name, email, password: pass, confirmPass })
             .then(res => {
                 console.log(res.data)
-                redirect("/verify/email")
+                router.push("/verifycode")
             }
             ).catch(err => {
                 setMessage(err.response.data.error)

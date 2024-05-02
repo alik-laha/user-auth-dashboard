@@ -2,9 +2,10 @@
 import React, { FormEvent, useState } from 'react';
 import "./verifyEmail.css"
 import axios from 'axios';
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 
 const VerifyEmail = () => {
+    const router = useRouter();
     const [code, setCode] = useState("");
     const [message, setMessage] = useState("");
     const [error, setError] = useState("none");
@@ -15,7 +16,7 @@ const VerifyEmail = () => {
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem("id", res.data.id)
-                redirect("/dashboard")
+                router.push("/")
             }).catch(err => {
                 console.log(err)
                 setMessage(err.response.data.error)
