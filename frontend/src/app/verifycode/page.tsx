@@ -3,24 +3,29 @@ import React, { FormEvent, useState } from 'react';
 import "./verifyEmail.css"
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
+import { Loader2 } from "lucide-react"
 
 const VerifyEmail = () => {
     const router = useRouter();
     const [code, setCode] = useState("");
     const [message, setMessage] = useState("");
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState("none");
 
     const handleVerify = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true)
         axios.post("api/user/verifyemail", { code })
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem("id", res.data.id)
                 router.push("/")
+                setLoading(false)
             }).catch(err => {
                 console.log(err)
                 setMessage(err.response.data.error)
                 setError("block")
+                setLoading(false)
             })
     }
     const handleResend = () => {
@@ -53,8 +58,12 @@ const VerifyEmail = () => {
                                 </div>
                             </div>
                             <div className="inputBox">
-                                <div className="links"> <p onClick={handleResend}>Resend Code</p></div>
-                                <input type="submit" value="Login" />
+                                <div className="links"> <p onClick={handleResend} className='text-white cursor-pointer'>Resend Code</p></div>
+                                <button className="bg-green-600 w-full">{loading ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                    <div>Submit</div>
+                                )}</button>
                                 <p style={{ display: error, color: "red", textAlign: "center" }}>{message}</p>
                             </div>
 

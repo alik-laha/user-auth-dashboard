@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
+import { Loader2 } from "lucide-react"
 
 
 const Signup = () => {
@@ -17,6 +18,7 @@ const Signup = () => {
     const [show, setShow] = useState(false);
     const [format, setFormat] = useState("password");
     const [error, setError] = useState("none");
+    const [loading, setLoading] = useState(false);
 
 
     const handlePassShow = () => {
@@ -30,14 +32,17 @@ const Signup = () => {
 
     const handleSignUp = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault();
+        setLoading(true)
         axios.post("/api/user/signup", { name, email, password: pass, confirmPass })
             .then(res => {
                 console.log(res.data)
+                setLoading(false)
                 router.push("/verifycode")
             }
             ).catch(err => {
                 setMessage(err.response.data.error)
                 setError("block")
+                setLoading(false)
             })
     }
 
@@ -84,7 +89,11 @@ const Signup = () => {
 
                             <div className="inputBox">
 
-                                <input type="submit" value="Login" />
+                                <button className="bg-green-600 w-full">{loading ? (
+                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                ) : (
+                                    <div>Submit</div>
+                                )}</button>
                                 <p style={{ display: error, color: "red", textAlign: "center" }}>{message}</p>
 
                             </div>
