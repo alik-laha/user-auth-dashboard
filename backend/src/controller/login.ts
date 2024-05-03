@@ -1,7 +1,6 @@
 import User from "../model/userModel.js";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import Verification from "../model/verificationModel.js";
 import { VerifyEmail } from "../helper/mailer.js";
 import crypto from "crypto";

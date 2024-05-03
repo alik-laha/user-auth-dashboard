@@ -2,9 +2,7 @@ import User from "../model/userModel.js";
 import { Request, Response } from "express";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
 import Verification from "../model/verificationModel.js";
-import { v4 as uuidv4 } from "uuid";
 import { VerifyEmail } from "../helper/mailer.js";
 
 const Signup = async (req: Request, res: Response) => {
