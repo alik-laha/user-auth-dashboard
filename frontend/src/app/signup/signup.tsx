@@ -34,8 +34,9 @@ function Signup() {
         axios.get("/api/user/VeryifyLogedIN")
             .then(res => {
                 console.log(res.data)
-                router.push("/")
+
             }).catch(err => {
+                router.push("/")
                 console.log(err)
             })
     }, [])
