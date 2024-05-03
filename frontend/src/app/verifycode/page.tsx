@@ -19,6 +19,8 @@ const VerifyEmail = () => {
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem("id", res.data.id)
+
+
                 router.push("/")
                 setLoading(false)
             }).catch(err => {
