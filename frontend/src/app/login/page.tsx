@@ -17,8 +17,6 @@ const LoginFull = () => {
 
                         <h2>Log In</h2>
                         <Login />
-
-
                     </div>
 
                 </div>

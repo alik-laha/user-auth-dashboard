@@ -1,5 +1,5 @@
 "use client";
-import React, { FormEvent, useState } from 'react';
+import React, { FormEvent, useState, useEffect } from 'react';
 import "./verifyEmail.css"
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
@@ -28,6 +28,18 @@ const VerifyEmail = () => {
                 setLoading(false)
             })
     }
+
+    useEffect(() => {
+        axios.get("/api/user/VerifyEmailRoute")
+            .then(res => {
+                console.log(res.data)
+
+            }).catch(err => {
+                router.push("/")
+                console.log(err)
+            })
+    }, [])
+
     const handleResend = () => {
         axios.get("api/user/resendcode")
             .then(res => {

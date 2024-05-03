@@ -2,7 +2,7 @@
 import React from 'react'
 import "./signup.css"
 import Link from "next/link"
-import { FormEvent, useState } from "react"
+import { FormEvent, useState, useEffect } from "react"
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
@@ -29,6 +29,16 @@ function Signup() {
             setFormat("text");
         }
     }
+
+    useEffect(() => {
+        axios.get("/api/user/VeryifyLogedIN")
+            .then(res => {
+                console.log(res.data)
+                router.push("/")
+            }).catch(err => {
+                console.log(err)
+            })
+    }, [])
 
     const handleSignUp = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault();

@@ -1,13 +1,15 @@
 "use client"
 import "./login.css"
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Link from 'next/link'
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react"
 
+
 function Login() {
+
     const router = useRouter();
 
     const [email, setEmail] = useState("");
@@ -26,6 +28,16 @@ function Login() {
             setFormat("text");
         }
     }
+
+    useEffect(() => {
+        axios.get("/api/user/VeryifyLogedIN")
+            .then(res => {
+                console.log(res.data)
+                router.push("/")
+            }).catch(err => {
+                console.log(err)
+            })
+    }, [])
 
     const handleLogin = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
