@@ -4,7 +4,7 @@ import Verification from "../model/verificationModel.js";
 import { LoggedIn } from "../helper/mailer.js";
 import UserInfo from "../model/deviceInfoModel.js";
 import { v4 as uuidv4 } from 'uuid';
-
+import { io } from "../index.js"
 
 const VerifyEmailCode = async (req: Request, res: Response) => {
     const { code } = req.body;
@@ -54,6 +54,22 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
         if (UserInfoData) {
             const Mail = await LoggedIn({ email: userdata.email, os: osInfo, browser: browserInfo, device: deviceInfo });
             if (Mail) {
+                io.on('connection', (socket) => {
+                    console.log('a user connected');
+
+                    socket.on('joinRoom', (room) => {
+                        socket.join(room);
+                    });
+
+                    socket.on('sendNotification', (data) => {
+                        io.to(data.room).emit('notification', data);
+                    });
+
+                    socket.on('disconnect', () => {
+                        console.log('user disconnected');
+                    });
+                });
+
                 res.cookie('token', token, { httpOnly: true, secure: true });
                 res.cookie("browser", browserInfo, { secure: true });
                 res.cookie("os", osInfo, { secure: true });
