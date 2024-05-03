@@ -36,7 +36,7 @@ function Signup() {
                 console.log(res.data)
 
             }).catch(err => {
-                router.push("/")
+                router.push("/verifycode")
                 console.log(err)
             })
     }, [])
