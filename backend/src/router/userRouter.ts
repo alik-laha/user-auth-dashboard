@@ -17,7 +17,7 @@ router.post("/verifyemail", VerifyEmail);
 
 router.get("/verifyuser", VerifyUser);
 
-router.get("/logout/:id", Logout);
+router.get("/logout", Logout);
 
 router.get("/resendcode", ResendCode);
 

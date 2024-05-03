@@ -13,12 +13,19 @@ const VerifyUser = async (req: Request, res: Response) => {
         }
         const Informaion: any = await UserInfo.findOne({ where: { token: token, userid: user } });
         if (!Informaion) {
+            for (let cookie in req.cookies) {
+                res.clearCookie(cookie);
+            }
             return res.status(404).json({ error: "Token not found" });
         }
         if (token === Informaion.token) {
             return res.status(200).json({ message: "User verified" });
         }
+        for (let cookie in req.cookies) {
+            res.clearCookie(cookie);
+        }
         return res.status(400).json({ error: "Invalid token" });
+
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: 'Server error' });
