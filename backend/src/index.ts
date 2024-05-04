@@ -34,3 +34,5 @@ server.listen(process.env.PORT, () => {
     console.log('listening on *:4000');
 }
 );
+
+export { server as app }
