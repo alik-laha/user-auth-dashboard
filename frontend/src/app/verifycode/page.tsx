@@ -4,8 +4,11 @@ import "./verifyEmail.css"
 import axios from 'axios';
 import { useRouter } from 'next/navigation'
 import { Loader2 } from "lucide-react"
+import io from "socket.io-client";
 
 const VerifyEmail = () => {
+
+    const socket = io("http://localhost:4000")
     const router = useRouter();
     const [code, setCode] = useState("");
     const [message, setMessage] = useState("");
@@ -19,8 +22,12 @@ const VerifyEmail = () => {
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem("id", res.data.id)
-
-
+                socket.emit("joinRoom", res.data.id)
+                const data = {
+                    room: res.data.id,
+                    message: "Email Verified"
+                }
+                socket.emit("getData", data)
                 router.push("/")
                 setLoading(false)
             }).catch(err => {
@@ -41,6 +48,8 @@ const VerifyEmail = () => {
                 console.log(err)
             })
     }, [])
+
+
 
     const handleResend = () => {
         axios.get("api/user/resendcode")

@@ -24,7 +24,7 @@ const Login = async (req: Request, res: Response) => {
                 await Verification.update({ verifyToken: verify, verificationExpiry: Date.now() + 600000 }, { where: { userid: user.userid } });
             }
             res.cookie("user", user.userid, { httpOnly: true });
-            return res.status(200).json({ message: 'Login successful', verify: user.isVerifyed });
+            return res.status(200).json({ message: 'Login successful', id: user.userid });
         }
     }
     catch (err) {

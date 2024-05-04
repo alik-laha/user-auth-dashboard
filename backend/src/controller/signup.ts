@@ -31,7 +31,7 @@ const Signup = async (req: Request, res: Response) => {
                 });
                 if (VerificationData) {
                     res.cookie('user', id, { httpOnly: true, secure: true });
-                    return res.status(201).json({ message: 'User created successfully' });
+                    return res.status(201).json({ message: 'User created successfully', id });
                 }
             }
             else {

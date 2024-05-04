@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import io from "socket.io-client";
 
 function Home() {
+  const socket = io("http://localhost:4000");
   const router = useRouter();
   const [verified, setVerified] = useState(false);
   useLayoutEffect(() => {
@@ -15,14 +16,19 @@ function Home() {
       router.push("/login");
 
     });
+
   }, [])
-  const socket = io("http://localhost:4000");
-  socket.on("connect", () => {
-    console.log("connected");
-  });
-  socket.on("disconnect", () => {
-    console.log("disconnected");
-  });
+  // const roomD = localStorage.getItem("id");
+  const Data = {
+    room: "alik",
+    message: "Welcome"
+  }
+  socket.emit("joinRoom", "alik")
+  socket.emit("getData", Data)
+  socket.on("notification", (data) => {
+    console.log(data)
+  })
+
   return (
     <div>
       <h1>Home</h1>
