@@ -12,6 +12,10 @@ const io = new SocketServer(server, {
 
 dotenv.config()
 
+// app.listen(process.env.PORT, () => {
+//     console.log(`Server is running on http://localhost:${process.env.PORT}`)
+// }
+// );
 
 io.on('connection', (socket) => {
 
