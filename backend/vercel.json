@@ -1,9 +1,21 @@
 {
     "version": 2,
+    "builds": [
+        {
+            "src": "src/**/*.ts",
+            "use": "@vercel/node"
+        }
+    ],
     "routes": [
         {
             "src": "/(.*)",
             "dest": "/"
         }
-    ]
+    ],
+    "functions": {
+        "src/": {
+            "includeFiles": "src/**/*.ts",
+            "excludeFiles": "node_modules/**"
+        }
+    }
 }
