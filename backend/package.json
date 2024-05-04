@@ -4,9 +4,9 @@
   "description": "user authentication is already integreated with this backend ",
   "main": "dist/index.js",
   "scripts": {
-    "dev": "nodemon ./src/index.ts",
+    "start": "node dist/index.js",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "dev": "nodemon src/index.ts"
   },
   "author": "Alik laha",
   "license": "ISC",
