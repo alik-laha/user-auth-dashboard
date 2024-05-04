@@ -9,19 +9,19 @@
     "routes": [
         {
             "src": "/api/.*",
-            "dest": "src/index.ts"
+            "dest": "dist/index.js"
         },
         {
             "src": "/socket.io/.*",
-            "dest": "src/index.ts"
+            "dest": "dist/index.js"
         }
     ],
     "server": {
-        "src": "src/index.ts",
+        "src": "dist/index.js",
         "routes": [
             {
                 "src": "/(.*)",
-                "dest": "src/index.ts"
+                "dest": "dist/index.js"
             }
         ]
     }
