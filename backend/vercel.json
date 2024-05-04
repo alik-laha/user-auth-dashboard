@@ -15,14 +15,5 @@
             "src": "/socket.io/.*",
             "dest": "dist/index.js"
         }
-    ],
-    "server": {
-        "src": "dist/index.js",
-        "routes": [
-            {
-                "src": "/(.*)",
-                "dest": "dist/index.js"
-            }
-        ]
-    }
+    ]
 }
