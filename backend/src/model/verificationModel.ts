@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/dataBaseConfig.js";
-import User from "./userModel.js";
+import sequelize from "../config/dataBaseConfig";
+import User from "./userModel";
 
 const Verification = sequelize.define('Verify', {
     userid: {

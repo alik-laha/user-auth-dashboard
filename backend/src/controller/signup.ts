@@ -1,9 +1,9 @@
-import User from "../model/userModel.js";
+import User from "../model/userModel";
 import { Request, Response } from "express";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
-import Verification from "../model/verificationModel.js";
-import { VerifyEmail } from "../helper/mailer.js";
+import Verification from "../model/verificationModel";
+import { VerifyEmail } from "../helper/mailer";
 
 const Signup = async (req: Request, res: Response) => {
     const { name, email, password } = req.body;

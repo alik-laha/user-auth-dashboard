@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import User from "../model/userModel.js"
+import User from "../model/userModel"
 
 
 export const VerifyEmailRoute = async (req: Request, res: Response) => {

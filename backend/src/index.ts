@@ -1,20 +1,17 @@
 import dotenv from 'dotenv'
-import app from "./app.js"
+import app from "./app"
 import { Server as SocketServer } from 'socket.io'
 import { createServer } from 'http'
 
 const server = createServer(app)
 const io = new SocketServer(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: process.env.FRONTEND_URL,
     }
 })
 
 dotenv.config()
 
-app.listen(process.env.PORT, () => {
-    console.log(`server is runing on port ${process.env.PORT}`)
-})
 
 io.on('connection', (socket) => {
 
@@ -33,7 +30,7 @@ io.on('connection', (socket) => {
 });
 
 
-server.listen(4000, () => {
+server.listen(process.env.PORT, () => {
     console.log('listening on *:4000');
 }
 );

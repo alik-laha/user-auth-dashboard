@@ -1,13 +1,13 @@
 import express from "express";
 const router = express.Router();
-import Signup from "../controller/signup.js";
-import CheckUser from "../middleware/checkUser.js";
-import Login from "../controller/login.js";
-import VerifyEmail from "../controller/verifyEmailCode.js";
-import VerifyUser from "../controller/verifyUser.js";
-import Logout from "../controller/logout.js";
-import ResendCode from "../controller/resendCode.js";
-import { VerifyEmailRoute, VeryifyLogedIN } from "../controller/verfyWhereToRoute.js";
+import Signup from "../controller/signup";
+import CheckUser from "../middleware/checkUser";
+import Login from "../controller/login";
+import VerifyEmail from "../controller/verifyEmailCode";
+import VerifyUser from "../controller/verifyUser";
+import Logout from "../controller/logout";
+import ResendCode from "../controller/resendCode";
+import { VerifyEmailRoute, VeryifyLogedIN } from "../controller/verfyWhereToRoute";
 
 router.post("/signup", CheckUser, Signup);
 

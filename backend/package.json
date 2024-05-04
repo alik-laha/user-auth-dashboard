@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "description": "user authentication is already integreated with this backend ",
   "main": "dist/index.js",
-  "type": "module",
   "scripts": {
-    "dev": "nodemon index.js",
-    "build": "tsc -w"
+    "dev": "nodemon ./src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "author": "Alik laha",
   "license": "ISC",
@@ -21,6 +21,7 @@
     "nodemon": "^3.1.0",
     "sequelize": "^6.37.3",
     "socket.io": "^4.7.5",
+    "ts-node": "^10.9.2",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
@@ -30,6 +31,7 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/nodemailer": "^6.4.14",
-    "@types/uuid": "^9.0.8"
+    "@types/uuid": "^9.0.8",
+    "typescript": "^5.4.5"
   }
 }

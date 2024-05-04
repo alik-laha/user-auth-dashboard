@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import Verification from "../model/verificationModel.js";
-import { VerifyEmail } from "../helper/mailer.js";
+import Verification from "../model/verificationModel";
+import { VerifyEmail } from "../helper/mailer";
 import crypto from "crypto";
-import User from "../model/userModel.js";
+import User from "../model/userModel";
 
 const ResendCode = async (req: Request, res: Response) => {
     const user = req.cookies.user;

@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import User from "../model/userModel.js";
-import Verification from "../model/verificationModel.js";
-import { LoggedIn } from "../helper/mailer.js";
-import UserInfo from "../model/deviceInfoModel.js";
+import User from "../model/userModel";
+import Verification from "../model/verificationModel";
+import { LoggedIn } from "../helper/mailer";
+import UserInfo from "../model/deviceInfoModel";
 import { v4 as uuidv4 } from 'uuid';
 
 const VerifyEmailCode = async (req: Request, res: Response) => {

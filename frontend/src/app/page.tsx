@@ -1,11 +1,12 @@
 "use client";
-import { useState, useLayoutEffect } from "react";
+import { useState, useLayoutEffect, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import io from "socket.io-client";
+import { Data } from "@/type";
+import { socket } from "@/socketio";
 
 function Home() {
-  const socket = io("http://localhost:4000");
   const router = useRouter();
   const [verified, setVerified] = useState(false);
   useLayoutEffect(() => {
@@ -19,15 +20,21 @@ function Home() {
 
   }, [])
   // const roomD = localStorage.getItem("id");
-  const Data = {
-    room: "alik",
-    message: "Welcome"
-  }
-  socket.emit("joinRoom", "alik")
-  socket.emit("getData", Data)
+  let Data: Data
+  useEffect(() => {
+    Data = {
+      room: localStorage.id,
+      message: "Welcome"
+    }
+    socket.emit("joinRoom", localStorage.id)
+    socket.emit("getData", Data)
+
+  }, [])
   socket.on("notification", (data) => {
     console.log(data)
   })
+
+
 
   return (
     <div>

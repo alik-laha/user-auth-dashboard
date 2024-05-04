@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import Info from "../model/deviceInfoModel.js";
-import { LoggedOut } from "../helper/mailer.js";
-import User from "../model/userModel.js";
+import Info from "../model/deviceInfoModel";
+import { LoggedOut } from "../helper/mailer";
+import User from "../model/userModel";
 
 const Logout = async (req: Request, res: Response) => {
     const user = req.cookies.user;

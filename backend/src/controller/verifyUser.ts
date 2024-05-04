@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import UserInfo from "../model/deviceInfoModel.js";
+import UserInfo from "../model/deviceInfoModel";
 
 const VerifyUser = async (req: Request, res: Response) => {
     const token = req.cookies.token;
