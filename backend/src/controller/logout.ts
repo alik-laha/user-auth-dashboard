@@ -5,7 +5,7 @@ import User from "../model/userModel";
 
 const Logout = async (req: Request, res: Response) => {
     const user = req.cookies.user;
-    const id = req.cookies.id;
+    const id = req.params.id;
     try {
         const checkUser: any = await User.findOne({ where: { userid: user } });
         const loged: any = await Info.findOne({ where: { id: id } });

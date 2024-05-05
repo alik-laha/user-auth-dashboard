@@ -41,7 +41,30 @@ function Home() {
     setData(data.data)
   })
 
-
+  const FetchData = (user: string): void => {
+    axios.get("/api/user/getalluser")
+      .then(res => {
+        console.log(res.data)
+        socket.emit("getData", { room: user, data: res.data.allUsers });
+        return
+      }).catch(err => {
+        console.log(err)
+      })
+  }
+  const Handlelogout = (data: any) => {
+    axios.get(`/api/user/logout/${data.id}`).then((res) => {
+      console.log(res.data);
+      FetchData(data.user);
+      router.push("/login");
+    }).catch((err) => {
+      console.log(err);
+    })
+    console.log(data.id)
+  }
+  socket.on("notification", (data) => {
+    console.log(data);
+    setData(data.data)
+  })
 
   return (
     <div className="grid grid-cols-3 gap-4 p-4" >
@@ -50,15 +73,15 @@ function Home() {
           return (
             <div key={data.id} className="bg-gray-200 p-4 rounded-lg">
               <div className="flex flex-col gap-auto">
-                <h1>{data.id === localStorage.getItem("id") ? <div className="bg-blue-200 text-black inline-block mb-2 ">current Device</div> : <button className="border border-black rounded-lg mb-2">Signout</button>}</h1>
+                <h1>{data.id === localStorage.getItem("id") ? <div className="bg-blue-200 text-black inline-block mb-2 ">current Device</div> : <button className="border border-black rounded-lg mb-2" onClick={() => Handlelogout(data)}>Signout</button>}</h1>
                 <span>
                   {data.Device === "Desktop" ? <CiDesktop /> : <MdPhoneAndroid />}
                 </span>
               </div>
               <h1 className="mb-2">OS: {data.OS}</h1>
               <h1 className="mb-2">BROWSER:{data.Browser}</h1>
-              <h1 className="mb-2">{data.Device}</h1>
-              <h1 className="mb-2">{data.loginTime.slice(0, 10)}</h1>
+              <h1 className="mb-2">Device: {data.Device}</h1>
+              <h1 className="mb-2">Login Date :{data.loginTime.slice(0, 10)}</h1>
             </div>
           )
         })
