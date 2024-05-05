@@ -8,6 +8,7 @@ import VerifyUser from "../controller/verifyUser";
 import Logout from "../controller/logout";
 import ResendCode from "../controller/resendCode";
 import { VerifyEmailRoute, VeryifyLogedIN } from "../controller/verfyWhereToRoute";
+import GetAllUser from "../controller/getallUser";
 
 router.post("/signup", CheckUser, Signup);
 
@@ -25,5 +26,6 @@ router.get("/VerifyEmailRoute", VerifyEmailRoute);
 
 router.get("/VeryifyLogedIN", VeryifyLogedIN);
 
+router.get("/getalluser", GetAllUser);
 
 export default router;

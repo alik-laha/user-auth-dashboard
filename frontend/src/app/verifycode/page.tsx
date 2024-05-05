@@ -13,31 +13,47 @@ const VerifyEmail = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("none");
 
-    const handleVerify = (e: FormEvent<HTMLFormElement>) => {
+    const FetchData = (user: string): void => {
+        axios.get("/api/user/getalluser")
+            .then(res => {
+                console.log(res.data)
+                socket.emit("getData", { room: user, data: res.data.allUsers });
+                return
+            }).catch(err => {
+                console.log(err)
+            })
+    }
+
+    const handleVerify = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true)
         axios.post("api/user/verifyemail", { code })
-            .then(res => {
-                console.log(res.data)
-                localStorage.setItem("id", res.data.id)
-                socket.emit("joinRoom", res.data.id)
+            .then((res) => {
+                localStorage.setItem("user", res.data.user);
+                localStorage.setItem("id", res.data.id);
+                socket.emit("joinRoom", res.data.user);
 
                 socket.on("notification", (data) => {
-                    console.log(data)
-                })
-                const Data = {
-                    room: res.data.id,
-                    message: "Email Verified"
+                    console.log(data);
+                });
+
+                try {
+                    FetchData(res.data.user);
+                    router.push("/");
+                    setLoading(false);
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                    setError("block");
+                    setMessage("Error fetching data. Please try again.");
+                    setLoading(false);
                 }
-                socket.emit("getData", Data)
-                router.push("/")
-                setLoading(false)
-            }).catch(err => {
-                console.log(err)
-                setMessage(err.response.data.error)
-                setError("block")
-                setLoading(false)
             })
+            .catch(err => {
+                console.error("Error verifying email:", err);
+                setMessage(err.response.data.error);
+                setError("block");
+                setLoading(false);
+            });
     }
 
     useEffect(() => {

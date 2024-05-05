@@ -58,7 +58,7 @@ const VerifyEmailCode = async (req: Request, res: Response) => {
                 res.cookie("browser", browserInfo, { secure: true });
                 res.cookie("os", osInfo, { secure: true });
                 res.cookie("device", deviceInfo, { secure: true });
-                return res.status(200).json({ message: 'Verification successful', id });
+                return res.status(200).json({ message: 'Verification successful', user, id });
             }
         }
 
