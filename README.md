@@ -58,6 +58,6 @@ The backend of this project is built using Express.js to create a RESTful API fo
    - `UserModel.ts`: Model for user data, including authentication details.
    - `deviceinfoModel.ts` :Model for store user browser device all data
    - `verificationModel.ts` :For verification detail 
-5. **Helper**: Functions that execute before processing a request.
+5. **Helper**: Functions that execute on Call for mail.
    - `mailler.ts`: for sending mail on login logout and verification code.
    
