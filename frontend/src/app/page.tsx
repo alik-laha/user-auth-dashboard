@@ -4,6 +4,10 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Data } from "@/type";
 import { socket } from "@/socketio";
+import { MdPhoneAndroid } from "react-icons/md";
+import { CiDesktop } from "react-icons/ci";
+
+
 
 function Home() {
   const [Data, setData] = useState([]);
@@ -45,12 +49,16 @@ function Home() {
         Data.map((data: any) => {
           return (
             <div key={data.id} className="bg-gray-200 p-4 rounded-lg">
-              <h1>{data.id}</h1>
-              <h1>{data.userid}</h1>
-              <h1>{data.OS}</h1>
-              <h1>{data.Browser}</h1>
-              <h1>{data.Device}</h1>
-              <h1>{data.loginTime}</h1>
+              <div className="flex flex-col gap-auto">
+                <h1>{data.id === localStorage.getItem("id") ? <div className="bg-blue-200 text-black inline-block mb-2 ">current Device</div> : <button className="border border-black rounded-lg mb-2">Signout</button>}</h1>
+                <span>
+                  {data.Device === "Desktop" ? <CiDesktop /> : <MdPhoneAndroid />}
+                </span>
+              </div>
+              <h1 className="mb-2">OS: {data.OS}</h1>
+              <h1 className="mb-2">BROWSER:{data.Browser}</h1>
+              <h1 className="mb-2">{data.Device}</h1>
+              <h1 className="mb-2">{data.loginTime.slice(0, 10)}</h1>
             </div>
           )
         })
