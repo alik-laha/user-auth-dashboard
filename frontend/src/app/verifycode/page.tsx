@@ -95,7 +95,7 @@ const VerifyEmail = () => {
 
                             <div className="inputBox">
                                 <div>
-                                    <input type="text" value={code} onChange={(e) => setCode(e.target.value)} required /><i>Email</i>
+                                    <input type="text" value={code} onChange={(e) => setCode(e.target.value)} required /><i>Code</i>
                                 </div>
                             </div>
                             <div className="inputBox">
