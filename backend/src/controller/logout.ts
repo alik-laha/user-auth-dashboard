@@ -15,9 +15,6 @@ const Logout = async (req: Request, res: Response) => {
         const logout = await Info.destroy({ where: { id: id } });
 
         if (logout) {
-            for (let cookie in req.cookies) {
-                res.clearCookie(cookie);
-            }
             await LoggedOut({ email: checkUser.email, os: loged.OS, browser: loged.Browser, device: loged.Device });
 
             return res.status(200).json({ message: "User logged out" });

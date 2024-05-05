@@ -25,6 +25,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('getData', (data) => {
+        console.log(data)
         io.to(data.room).emit('notification', data);
     });
 

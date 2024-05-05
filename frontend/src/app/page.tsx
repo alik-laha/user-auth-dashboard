@@ -44,7 +44,8 @@ function Home() {
   const FetchData = (user: string): void => {
     axios.get("/api/user/getalluser")
       .then(res => {
-        console.log(res.data)
+        socket.emit("joinRoom", user);
+        console.log(res.data.allUsers)
         socket.emit("getData", { room: user, data: res.data.allUsers });
         return
       }).catch(err => {
@@ -54,7 +55,7 @@ function Home() {
   const Handlelogout = (data: any) => {
     axios.get(`/api/user/logout/${data.id}`).then((res) => {
       console.log(res.data);
-      FetchData(data.user);
+      FetchData(data.userid);
       router.push("/login");
     }).catch((err) => {
       console.log(err);
