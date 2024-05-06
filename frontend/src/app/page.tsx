@@ -56,7 +56,6 @@ function Home() {
     axios.get(`/api/user/logout/${data.id}`).then((res) => {
       console.log(res.data);
       FetchData(data.userid);
-      router.push("/login");
     }).catch((err) => {
       console.log(err);
     })
