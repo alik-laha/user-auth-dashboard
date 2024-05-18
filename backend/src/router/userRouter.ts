@@ -12,6 +12,10 @@ import GetAllUser from "../controller/getallUser";
 
 router.post("/signup", CheckUser, Signup);
 
+router.get("/", (req, res) => {
+    res.send("Hello World");
+})
+
 router.put("/login", Login)
 
 router.post("/verifyemail", VerifyEmail);
